@@ -1,0 +1,23 @@
+{
+  "name": "hexlet-front2-ssssank",
+  "version": "1.0.0",
+  "description": "Second project in Hexlet's frontend proffession",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssssank/frontend-project-lvl2.git"
+  },
+  "keywords": [
+    "hexlet",
+    "gendiff"
+  ],
+  "author": "Aleksandr Litvinov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ssssank/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/ssssank/frontend-project-lvl2#readme"
+}
