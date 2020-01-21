@@ -1,3 +1,4 @@
 #!/usr/bin/env node
+import { program } from '..';
 
-console.log('Test');
+program.parse(process.argv);
