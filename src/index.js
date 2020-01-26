@@ -1,6 +1,7 @@
 import commander from 'commander';
 
-const pkg = require("../package.json");
+const pkg = require('../package.json');
+
 const program = new commander.Command();
 program
   .version(pkg.version)
@@ -11,4 +12,4 @@ program
     console.log(firstConfig, secondConfig);
   });
 
-export { program };
+export default program;
