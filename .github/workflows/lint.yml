@@ -1,11 +1,10 @@
-name: Node.js CI
+name: On Push
 
-on: [push]
+on: push
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js 
-    - run: make lint
+      - name: runLint
+        run: make lint
