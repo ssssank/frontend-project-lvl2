@@ -4,13 +4,8 @@ on: [push]
 
 jobs:
   build:
-
-    runs-on: ubuntu-latest
-    
+    runs-on: ubuntu-latest 
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js 
-
     - run: make lint
-      env:
-        CI: true
