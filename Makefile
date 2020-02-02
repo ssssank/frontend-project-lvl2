@@ -11,4 +11,6 @@ lint:
 	npx eslint src
 
 test:
-	npx jest
+	npm test
+
+.PHONY: test
