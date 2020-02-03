@@ -3,7 +3,7 @@ import yaml from 'js-yaml';
 import gendiff from '../src/gendiff';
 
 test('json', () => {
-  const right = fs.readFileSync(`${__dirname}/../fixtures/right`, 'utf-8');
+  const right = fs.readFileSync(`${__dirname}/../fixtures/right_json`, 'utf-8');
   const before = fs.readFileSync(`${__dirname}/../fixtures/before.json`, 'utf-8');
   const after = fs.readFileSync(`${__dirname}/../fixtures/after.json`, 'utf-8');
   expect(gendiff({}, {})).toEqual('{\n}');
@@ -11,7 +11,7 @@ test('json', () => {
 });
 
 test('yaml', () => {
-  const right = fs.readFileSync(`${__dirname}/../fixtures/right`, 'utf-8');
+  const right = fs.readFileSync(`${__dirname}/../fixtures/right_yml`, 'utf-8');
   const before = fs.readFileSync(`${__dirname}/../fixtures/before.yml`, 'utf-8');
   const after = fs.readFileSync(`${__dirname}/../fixtures/after.yml`, 'utf-8');
   expect(gendiff({}, {})).toEqual('{\n}');
