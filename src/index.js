@@ -1,6 +1,7 @@
 import commander from 'commander';
 import gendiff from './gendiff';
 import parse from './parse';
+// import pkg from '../package.json';
 
 const pkg = require('../package.json');
 
