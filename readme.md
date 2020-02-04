@@ -7,3 +7,6 @@
 
 ## With yaml files
 [![asciicast](https://asciinema.org/a/Zq7Zjs8rptGBZdN66BC74mMXf.svg)](https://asciinema.org/a/Zq7Zjs8rptGBZdN66BC74mMXf)
+
+## With ini files
+[![asciicast](https://asciinema.org/a/fX2pz5un6n2g2wiiDJ1ZCCp9c.svg)](https://asciinema.org/a/fX2pz5un6n2g2wiiDJ1ZCCp9c)
