@@ -30,3 +30,11 @@ test('ini', () => {
   expect(gendiff({}, {})).toEqual('{\n}');
   expect(gendiff(ini.parse(before), ini.parse(after))).toEqual(right);
 });
+
+test('json2', () => {
+  const right = readFile('right_json_2');
+  const before = readFile('before_2.json');
+  const after = readFile('after_2.json');
+  expect(gendiff({}, {})).toEqual('{\n}');
+  expect(gendiff(JSON.parse(before), JSON.parse(after))).toEqual(right);
+});
