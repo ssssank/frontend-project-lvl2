@@ -11,7 +11,7 @@ test('json', () => {
   const right = readFile('right_json');
   const before = readFile('before.json');
   const after = readFile('after.json');
-  expect(gendiff({}, {})).toEqual('{\n}');
+  expect(gendiff({}, {})).toEqual('{}');
   expect(gendiff(JSON.parse(before), JSON.parse(after))).toEqual(right);
 });
 
@@ -19,7 +19,7 @@ test('yaml', () => {
   const right = readFile('right_yml');
   const before = readFile('before.yml');
   const after = readFile('after.yml');
-  expect(gendiff({}, {})).toEqual('{\n}');
+  expect(gendiff({}, {})).toEqual('{}');
   expect(gendiff(yaml.safeLoad(before), yaml.safeLoad(after))).toEqual(right);
 });
 
@@ -27,7 +27,7 @@ test('ini', () => {
   const right = readFile('right_ini');
   const before = readFile('before.ini');
   const after = readFile('after.ini');
-  expect(gendiff({}, {})).toEqual('{\n}');
+  expect(gendiff({}, {})).toEqual('{}');
   expect(gendiff(ini.parse(before), ini.parse(after))).toEqual(right);
 });
 
@@ -35,6 +35,6 @@ test('json2', () => {
   const right = readFile('right_json_2');
   const before = readFile('before_2.json');
   const after = readFile('after_2.json');
-  expect(gendiff({}, {})).toEqual('{\n}');
+  expect(gendiff({}, {})).toEqual('{}');
   expect(gendiff(JSON.parse(before), JSON.parse(after))).toEqual(right);
 });
