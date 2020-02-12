@@ -40,43 +40,42 @@ const buildAST = (obj1, obj2) => {
   return AST;
 };
 
-const stringify = (X) => {
-  if (_.isObject(X)) {
-    const a = Object.keys(X);
-    const b = Object.values(X);
-    return `${a}: ${b}`;
+const stringify = (value) => `${Object.keys(value)}: ${Object.values(value)}`;
+
+const getIndent = (level, z = ' ') => {
+  if (level === 0) {
+    return '';
   }
-  return X;
+  return `${' '.repeat(((level * 4) - 2))}${z} `;
 };
 
 const renderDiff = (AST) => {
-  const iter = (AST, level) => {
-    const keys = Object.keys(AST);
+  const iter = (tree, level) => {
+    const keys = Object.keys(tree);
     const res = [];
     keys.forEach((key) => {
-      if (_.has(AST[key], 'children')) {
-        res.push(`${' '.repeat(level * 4)}${key}: ${iter(AST[key].children, level + 1)}`);
+      if (_.has(tree[key], 'children')) {
+        res.push(`${getIndent(level)}${key}: ${iter(tree[key].children, level + 1)}`);
       }
-      let test = AST[key].value;
-      let test2 = AST[key].valueNew;
-      if (_.isObject(AST[key].value)) {
-        test = `{\n${' '.repeat((level + 1) * 4)}${stringify(AST[key].value)}\n${' '.repeat(level * 4)}}`;
-      } else if (_.isObject(AST[key].valueNew)) {
-        test2 = `{\n${' '.repeat((level + 1) * 4)}${stringify(AST[key].valueNew)}\n${' '.repeat(level * 4)}}`;
+      let { value, valueNew } = tree[key];
+      if (_.isObject(value)) {
+        value = `{\n${getIndent(level + 1)}${stringify(value)}\n${getIndent(level)}}`;
+      } else if (_.isObject(valueNew)) {
+        valueNew = `{\n${getIndent(level + 1)}${stringify(valueNew)}\n${getIndent(level)}}`;
       }
-      if (AST[key].status === 'modified') {
-        res.push(`${' '.repeat(level * 4 - 2)}- ${key}: ${test}`);
-        res.push(`${' '.repeat(level * 4 - 2)}+ ${key}: ${test2}`);
-      } else if (AST[key].status === 'not modified') {
-        res.push(`${' '.repeat(level * 4)}${key}: ${test}`);
-      } else if (AST[key].status === 'deleted') {
-        res.push(`${' '.repeat(level * 4 - 2)}- ${key}: ${test}`);
-      } else if (AST[key].status === 'added') {
-        res.push(`${' '.repeat(level * 4 - 2)}+ ${key}: ${test}`);
+      if (tree[key].status === 'modified') {
+        res.push(`${getIndent(level, '-')}${key}: ${value}`);
+        res.push(`${getIndent(level, '+')}${key}: ${valueNew}`);
+      } else if (tree[key].status === 'not modified') {
+        res.push(`${getIndent(level)}${key}: ${value}`);
+      } else if (tree[key].status === 'deleted') {
+        res.push(`${getIndent(level, '-')}${key}: ${value}`);
+      } else if (tree[key].status === 'added') {
+        res.push(`${getIndent(level, '+')}${key}: ${value}`);
       }
     });
 
-    return res.length > 0 ? `{\n${res.join('\n')}\n${' '.repeat((level - 1) * 4)}}` : '{}';
+    return res.length > 0 ? `{\n${res.join('\n')}\n${getIndent(level - 1)}}` : '{}';
   };
 
   return iter(AST, 1);
