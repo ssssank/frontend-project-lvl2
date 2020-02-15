@@ -1,5 +1,5 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
 ![On Push](https://github.com/ssssank/frontend-project-lvl2/workflows/On%20Push/badge.svg)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/281b3c593b05dbf63453/test_coverage)](https://codeclimate.com/github/ssssank/frontend-project-lvl2/test_coverage)
 
 # Install and use
 ## With json files

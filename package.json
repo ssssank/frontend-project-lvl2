@@ -1,6 +1,6 @@
 {
   "name": "hexlet-front2-ssssank",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Second project in Hexlet's frontend proffession",
   "main": "index.js",
   "scripts": {
@@ -27,6 +27,9 @@
   "bin": {
     "gendiff": "dist/bin/gendiff.js"
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "homepage": "https://github.com/ssssank/frontend-project-lvl2#readme",
   "dependencies": {
     "commander": "^4.1.0",
@@ -45,6 +48,7 @@
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-babel": "^5.3.0",
     "eslint-plugin-import": "^2.20.0",
-    "jest": "^25.1.0"
+    "jest": "^25.1.0",
+    "jest-cli": "^25.1.0"
   }
 }
