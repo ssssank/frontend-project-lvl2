@@ -46,3 +46,11 @@ test('json to plain', () => {
   expect(gendiff({}, {}, 'plain')).toEqual('');
   expect(gendiff(JSON.parse(before), JSON.parse(after), 'plain')).toEqual(right);
 });
+
+test('json to json', () => {
+  const right = readFile('right_json_json');
+  const before = readFile('before_2.json');
+  const after = readFile('after_2.json');
+  expect(gendiff({}, {}, 'plain')).toEqual('');
+  expect(gendiff(JSON.parse(before), JSON.parse(after), 'json')).toEqual(right);
+});
