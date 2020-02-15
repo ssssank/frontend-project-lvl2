@@ -41,7 +41,7 @@ const buildAST = (obj1, obj2) => {
   return AST;
 };
 
-const gendiff = (obj1, obj2, format) => {
+const gendiff = (obj1, obj2, format = 'text') => {
   const AST = buildAST(obj1, obj2);
   const render = formatter(format);
   return render(AST);

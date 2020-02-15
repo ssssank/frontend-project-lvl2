@@ -1,11 +1,11 @@
 import plain from './plain';
 import text from './text';
 
-const render = (format) => {
-  if (format === 'plain') {
-    return plain;
-  }
-  return text;
+const renders = {
+  plain,
+  text,
 };
+
+const render = (format) => renders[format];
 
 export default render;

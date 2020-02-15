@@ -11,3 +11,6 @@
 
 ## With ini files
 [![asciicast](https://asciinema.org/a/fX2pz5un6n2g2wiiDJ1ZCCp9c.svg)](https://asciinema.org/a/fX2pz5un6n2g2wiiDJ1ZCCp9c)
+
+## Choosing output format
+[![asciicast](https://asciinema.org/a/rs6C8mjVFnofAfgJ1nC37ouoK.svg)](https://asciinema.org/a/rs6C8mjVFnofAfgJ1nC37ouoK)
