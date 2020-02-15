@@ -3,7 +3,7 @@ name: On Push
 on: push
 
 jobs:
-  lint:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
