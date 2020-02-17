@@ -1,38 +1,38 @@
 import _ from 'lodash';
 
-const stringify = (value) => `${Object.keys(value)}: ${Object.values(value)}`;
+const tabSize = 4;
 
-const getIndent = (level, z = ' ') => {
+const getIndent = (level, mark = ' ') => {
   if (level === 0) {
     return '';
   }
-  return `${' '.repeat(((level * 4) - 2))}${z} `;
+  return `${' '.repeat(((level * tabSize) - 2))}${mark} `;
 };
+
+const stringify = (value, level) => `{\n${getIndent(level + 1)}${Object.keys(value)}: ${Object.values(value)}\n${getIndent(level)}}`;
 
 const render = (AST) => {
   const iter = (tree, level) => {
     const keys = Object.keys(tree);
-    const res = [];
-    keys.forEach((key) => {
+    const res = keys.map((key) => {
       if (_.has(tree[key], 'children')) {
-        res.push(`${getIndent(level)}${key}: ${iter(tree[key].children, level + 1)}`);
+        return `${getIndent(level)}${key}: ${iter(tree[key].children, level + 1)}`;
       }
-      let { value, valueNew } = tree[key];
-      if (_.isObject(value)) {
-        value = `{\n${getIndent(level + 1)}${stringify(value)}\n${getIndent(level)}}`;
-      } else if (_.isObject(valueNew)) {
-        valueNew = `{\n${getIndent(level + 1)}${stringify(valueNew)}\n${getIndent(level)}}`;
+      const value = _.isObject(tree[key].value) ? `${stringify(tree[key].value, level)}` : tree[key].value;
+      const valueNew = _.isObject(tree[key].valueNew) ? `${stringify(tree[key].valueNew, level)}` : tree[key].valueNew;
+      switch (tree[key].status) {
+        case 'modified':
+          return `${getIndent(level, '-')}${key}: ${value}\n${getIndent(level, '+')}${key}: ${valueNew}`;
+        case 'deleted':
+          return `${getIndent(level, '-')}${key}: ${value}`;
+        case 'added':
+          return `${getIndent(level, '+')}${key}: ${value}`;
+        case 'not modified':
+          return `${getIndent(level)}${key}: ${value}`;
+        default:
+          break;
       }
-      if (tree[key].status === 'modified') {
-        res.push(`${getIndent(level, '-')}${key}: ${value}`);
-        res.push(`${getIndent(level, '+')}${key}: ${valueNew}`);
-      } else if (tree[key].status === 'not modified') {
-        res.push(`${getIndent(level)}${key}: ${value}`);
-      } else if (tree[key].status === 'deleted') {
-        res.push(`${getIndent(level, '-')}${key}: ${value}`);
-      } else if (tree[key].status === 'added') {
-        res.push(`${getIndent(level, '+')}${key}: ${value}`);
-      }
+      return '';
     });
 
     return res.length > 0 ? `{\n${res.join('\n')}\n${getIndent(level - 1)}}` : '{}';
