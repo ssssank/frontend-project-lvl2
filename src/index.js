@@ -1,19 +1,10 @@
-import commander from 'commander';
-import gendiff from './gendiff';
-import parse from './parse';
+import buildAST from './buildAST';
+import formatter from './formatters';
 
-const pkg = require('../package.json');
+const gendiff = (obj1, obj2, format = 'text') => {
+  const AST = buildAST(obj1, obj2);
+  const render = formatter(format);
+  return render(AST);
+};
 
-const program = new commander.Command();
-program
-  .version(pkg.version)
-  .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format [type]', 'Output format')
-  .arguments('<firstConfig> <secondConfig>')
-  .action((firstConfig, secondConfig) => {
-    const file1 = parse(firstConfig);
-    const file2 = parse(secondConfig);
-    console.log(gendiff(file1, file2, program.format));
-  });
-
-export default program;
+export default gendiff;

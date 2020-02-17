@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import formatter from './formatters';
 
 const buildAST = (obj1, obj2) => {
   const keys = _.union(Object.keys(obj1), Object.keys(obj2)).sort();
@@ -40,10 +39,4 @@ const buildAST = (obj1, obj2) => {
   return AST;
 };
 
-const gendiff = (obj1, obj2, format = 'text') => {
-  const AST = buildAST(obj1, obj2);
-  const render = formatter(format);
-  return render(AST);
-};
-
-export default gendiff;
+export default buildAST;

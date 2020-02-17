@@ -2,7 +2,7 @@ import fs from 'fs';
 import yaml from 'js-yaml';
 import ini from 'ini';
 import path from 'path';
-import gendiff from '../src/gendiff';
+import gendiff from '../src';
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 const readFile = (filename) => fs.readFileSync(getFixturePath(filename), 'utf-8');
