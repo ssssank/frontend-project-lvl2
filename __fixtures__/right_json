@@ -1,8 +1,1 @@
-{
-  - follow: false
-    host: hexlet.io
-  - proxy: 123.234.53.22
-  - timeout: 50
-  + timeout: 20
-  + verbose: true
-}
+{"common":{"children":{"follow":{"value":false,"status":"added"},"setting1":{"value":"Value 1","status":"not modified"},"setting2":{"value":200,"status":"deleted"},"setting3":{"value":true,"valueNew":{"key":"value"},"status":"modified"},"setting4":{"value":"blah blah","status":"added"},"setting5":{"value":{"key5":"value5"},"status":"added"},"setting6":{"children":{"key":{"value":"value","status":"not modified"},"ops":{"value":"vops","status":"added"}}}}},"group1":{"children":{"baz":{"value":"bas","valueNew":"bars","status":"modified"},"foo":{"value":"bar","status":"not modified"},"nest":{"value":{"key":"value"},"valueNew":"str","status":"modified"}}},"group2":{"value":{"abc":12345},"status":"deleted"},"group3":{"value":{"fee":100500},"status":"added"}}

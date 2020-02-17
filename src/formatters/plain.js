@@ -22,7 +22,6 @@ const render = (AST) => {
           default:
             break;
         }
-
         return '';
       });
 
