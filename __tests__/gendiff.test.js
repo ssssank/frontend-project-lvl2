@@ -19,7 +19,6 @@ test('ini intput', () => {
   const right = readFile('right_text');
   const before = readFile('before.ini');
   const after = readFile('after.ini');
-  expect(gendiff({}, {})).toEqual('{}');
   expect(gendiff(ini.parse(before), ini.parse(after))).toEqual(right);
 });
 
@@ -27,7 +26,6 @@ test('text output', () => {
   const right = readFile('right_text');
   const before = readFile('before.json');
   const after = readFile('after.json');
-  expect(gendiff({}, {})).toEqual('{}');
   expect(gendiff(JSON.parse(before), JSON.parse(after))).toEqual(right);
 });
 
@@ -35,7 +33,6 @@ test('plain output', () => {
   const right = readFile('right_plain');
   const before = readFile('before.json');
   const after = readFile('after.json');
-  expect(gendiff({}, {}, 'plain')).toEqual('');
   expect(gendiff(JSON.parse(before), JSON.parse(after), 'plain')).toEqual(right);
 });
 

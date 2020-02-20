@@ -11,9 +11,7 @@ jobs:
         run: make install
       - name: run eslint
         run: make lint
-      - name: run test
-        run: make test
-      - name: code coverage
+      - name: test & code coverage
         uses: paambaati/codeclimate-action@v2.4.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
