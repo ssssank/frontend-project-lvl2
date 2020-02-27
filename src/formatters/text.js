@@ -13,26 +13,24 @@ const stringify = (value, level) => `{\n${getIndent(level + 1)}${Object.keys(val
 
 const render = (AST) => {
   const iter = (tree, level) => {
-    const keys = Object.keys(tree);
-    const res = keys.map((key) => {
-      if (_.has(tree[key], 'children')) {
-        return `${getIndent(level)}${key}: ${iter(tree[key].children, level + 1)}`;
+    const res = tree.map((key) => {
+      if (_.has(key, 'children')) {
+        return `${getIndent(level)}${key.name}: ${iter(key.children, level + 1)}`;
       }
-      const value = _.isObject(tree[key].value) ? `${stringify(tree[key].value, level)}` : tree[key].value;
-      const valueNew = _.isObject(tree[key].valueNew) ? `${stringify(tree[key].valueNew, level)}` : tree[key].valueNew;
-      switch (tree[key].status) {
+      const value = _.isObject(key.value) ? `${stringify(key.value, level)}` : key.value;
+      const valueNew = _.isObject(key.valueNew) ? `${stringify(key.valueNew, level)}` : key.valueNew;
+      switch (key.status) {
         case 'modified':
-          return `${getIndent(level, '-')}${key}: ${value}\n${getIndent(level, '+')}${key}: ${valueNew}`;
+          return `${getIndent(level, '-')}${key.name}: ${value}\n${getIndent(level, '+')}${key.name}: ${valueNew}`;
         case 'deleted':
-          return `${getIndent(level, '-')}${key}: ${value}`;
+          return `${getIndent(level, '-')}${key.name}: ${value}`;
         case 'added':
-          return `${getIndent(level, '+')}${key}: ${value}`;
+          return `${getIndent(level, '+')}${key.name}: ${value}`;
         case 'not modified':
-          return `${getIndent(level)}${key}: ${value}`;
+          return `${getIndent(level)}${key.name}: ${value}`;
         default:
-          break;
+          throw new Error(`Unknown status of key '${key.status}'!`);
       }
-      return '';
     });
 
     return res.length > 0 ? `{\n${res.join('\n')}\n${getIndent(level - 1)}}` : '{}';

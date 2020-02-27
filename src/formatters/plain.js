@@ -2,17 +2,16 @@ import _ from 'lodash';
 
 const render = (AST) => {
   const iter = (tree, path) => {
-    const keys = Object.keys(tree);
-    const res = keys
-      .filter((key) => tree[key].status !== 'not modified')
+    const res = tree
+      .filter((key) => key.status !== 'not modified')
       .map((key) => {
-        const newPath = path.length === 0 ? `${key}` : `${path}.${key}`;
-        if (_.has(tree[key], 'children')) {
-          return (`${iter(tree[key].children, newPath)}`);
+        const newPath = path.length === 0 ? `${key.name}` : `${path}.${key.name}`;
+        if (_.has(key, 'children')) {
+          return (`${iter(key.children, newPath)}`);
         }
-        const value = _.isObject(tree[key].value) ? '[complex value]' : tree[key].value;
-        const valueNew = _.isObject(tree[key].valueNew) ? '[complex value]' : tree[key].valueNew;
-        switch (tree[key].status) {
+        const value = _.isObject(key.value) ? '[complex value]' : key.value;
+        const valueNew = _.isObject(key.valueNew) ? '[complex value]' : key.valueNew;
+        switch (key.status) {
           case 'modified':
             return `Property '${newPath}' was changed from ${value} to ${valueNew}`;
           case 'deleted':
@@ -20,9 +19,8 @@ const render = (AST) => {
           case 'added':
             return `Property '${newPath}' was added with value: ${value}`;
           default:
-            break;
+            throw new Error(`Unknown status of key '${key.status}'!`);
         }
-        return '';
       });
 
     return res.join('\n');
