@@ -13,8 +13,8 @@ const testInput = outputFormats.flatMap((format) => (
 ));
 
 test.each(testInput)('test %s files with %s output format', (ext, format) => {
-  const rightFile = readFile(getFixturePath(`right_${format}`));
-  const beforeFile = getFixturePath(`before.${ext}`);
-  const afterFile = getFixturePath(`after.${ext}`);
-  expect(gendiff(beforeFile, afterFile, format)).toEqual(rightFile);
+  const rightContent = readFile(getFixturePath(`right_${format}`));
+  const beforeFilepath = getFixturePath(`before.${ext}`);
+  const afterFilepath = getFixturePath(`after.${ext}`);
+  expect(gendiff(beforeFilepath, afterFilepath, format)).toEqual(rightContent);
 });
