@@ -6,12 +6,11 @@ const render = (AST) => {
       .filter((key) => key.status !== 'not modified')
       .map((key) => {
         const newPath = path.length === 0 ? `${key.name}` : `${path}.${key.name}`;
-        if (_.has(key, 'children')) {
-          return (`${iter(key.children, newPath)}`);
-        }
         const value = _.isObject(key.value) ? '[complex value]' : key.value;
         const valueNew = _.isObject(key.valueNew) ? '[complex value]' : key.valueNew;
         switch (key.status) {
+          case 'nested':
+            return (`${iter(key.children, newPath)}`);
           case 'modified':
             return `Property '${newPath}' was changed from ${value} to ${valueNew}`;
           case 'deleted':

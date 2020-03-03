@@ -14,12 +14,11 @@ const stringify = (value, level) => `{\n${getIndent(level + 1)}${Object.keys(val
 const render = (AST) => {
   const iter = (tree, level) => {
     const res = tree.map((key) => {
-      if (_.has(key, 'children')) {
-        return `${getIndent(level)}${key.name}: ${iter(key.children, level + 1)}`;
-      }
       const value = _.isObject(key.value) ? `${stringify(key.value, level)}` : key.value;
       const valueNew = _.isObject(key.valueNew) ? `${stringify(key.valueNew, level)}` : key.valueNew;
       switch (key.status) {
+        case 'nested':
+          return `${getIndent(level)}${key.name}: ${iter(key.children, level + 1)}`;
         case 'modified':
           return `${getIndent(level, '-')}${key.name}: ${value}\n${getIndent(level, '+')}${key.name}: ${valueNew}`;
         case 'deleted':
