@@ -8,6 +8,6 @@ const renders = {
   json,
 };
 
-const render = (format) => renders[format];
+const getFormatter = (format) => renders[format];
 
-export default render;
+export default getFormatter;
