@@ -9,7 +9,13 @@ const getIndent = (level, mark = ' ') => {
   return `${' '.repeat(((level * tabSize) - 2))}${mark} `;
 };
 
-const stringify = (value, level) => `{\n${getIndent(level + 1)}${Object.keys(value)}: ${Object.values(value)}\n${getIndent(level)}}`;
+const stringify = (object, level) => {
+  const innerIndent = getIndent(level + 1);
+  const externalIndent = getIndent(level);
+  const key = Object.keys(object);
+  const value = Object.values(object);
+  return `{\n${innerIndent}${key}: ${value}\n${externalIndent}}`;
+};
 
 const render = (AST) => {
   const iter = (tree, level) => {
