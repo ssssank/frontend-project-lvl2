@@ -1,8 +1,7 @@
 #!/usr/bin/env node
 import commander from 'commander';
 import gendiff from '..';
-
-const pkg = require('../../package.json');
+import pkg from '../../package.json';
 
 const program = new commander.Command();
 program
