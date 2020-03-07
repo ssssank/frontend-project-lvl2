@@ -1,13 +1,15 @@
 import _ from 'lodash';
 
+const getValue = (value) => (_.isObject(value) ? '[complex value]' : value);
+
 const render = (AST) => {
   const iter = (tree, path) => {
     const res = tree
       .filter((key) => key.status !== 'not modified')
       .map((key) => {
         const newPath = path.length === 0 ? `${key.name}` : `${path}.${key.name}`;
-        const value = _.isObject(key.value) ? '[complex value]' : key.value;
-        const valueNew = _.isObject(key.valueNew) ? '[complex value]' : key.valueNew;
+        const value = getValue(key.value);
+        const valueNew = getValue(key.valueNew);
         switch (key.status) {
           case 'nested':
             return (`${iter(key.children, newPath)}`);
