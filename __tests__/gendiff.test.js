@@ -12,9 +12,16 @@ const testInput = outputFormats.flatMap((format) => (
   fileExtentions.map((filetype) => [filetype, format])
 ));
 
+const right = {};
+
+beforeAll(() => {
+  right.json = readFile(getFixturePath('right_json'));
+  right.plain = readFile(getFixturePath('right_plain'));
+  right.text = readFile(getFixturePath('right_text'));
+});
+
 test.each(testInput)('test %s files with %s output format', (ext, format) => {
-  const rightContent = readFile(getFixturePath(`right_${format}`));
   const beforeFilepath = getFixturePath(`before.${ext}`);
   const afterFilepath = getFixturePath(`after.${ext}`);
-  expect(gendiff(beforeFilepath, afterFilepath, format)).toEqual(rightContent);
+  expect(gendiff(beforeFilepath, afterFilepath, format)).toEqual(right[format]);
 });
