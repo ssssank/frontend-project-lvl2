@@ -9,19 +9,22 @@ const getIndent = (level, mark = ' ') => {
   return `${' '.repeat(((level * tabSize) - 2))}${mark} `;
 };
 
-const stringify = (object, level) => {
+const stringify = (value, level) => {
+  if (!(_.isObject(value))) {
+    return value;
+  }
   const innerIndent = getIndent(level + 1);
   const externalIndent = getIndent(level);
-  const key = Object.keys(object);
-  const value = Object.values(object);
-  return `{\n${innerIndent}${key}: ${value}\n${externalIndent}}`;
+  const key = Object.keys(value);
+  const property = Object.values(value);
+  return `{\n${innerIndent}${key}: ${property}\n${externalIndent}}`;
 };
 
 const render = (AST) => {
   const iter = (tree, level) => {
     const res = tree.map((key) => {
-      const value = _.isObject(key.value) ? `${stringify(key.value, level)}` : key.value;
-      const valueNew = _.isObject(key.valueNew) ? `${stringify(key.valueNew, level)}` : key.valueNew;
+      const value = `${stringify(key.value, level)}`;
+      const valueNew = `${stringify(key.valueNew, level)}`;
       switch (key.status) {
         case 'nested':
           return `${getIndent(level)}${key.name}: ${iter(key.children, level + 1)}`;
