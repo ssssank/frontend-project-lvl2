@@ -7,7 +7,7 @@ const program = new commander.Command();
 program
   .version(pkg.version)
   .description('Compares two configuration files and shows a difference.')
-  .option('-f, --format [type]', 'Output format', 'text')
+  .option('-f, --format [type]', 'Output format', 'pretty')
   .arguments('<firstConfig> <secondConfig>')
   .action((firstConfig, secondConfig) => {
     console.log(gendiff(firstConfig, secondConfig, program.format));

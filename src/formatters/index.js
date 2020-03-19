@@ -1,10 +1,10 @@
 import plain from './plain';
-import text from './text';
+import pretty from './pretty';
 import json from './json';
 
 const renders = {
   plain,
-  text,
+  pretty,
   json,
 };
 

@@ -4,7 +4,7 @@ import parse from './parse';
 import buildAST from './buildAST';
 import getFormatter from './formatters';
 
-const gendiff = (filepathBefore, filepathAfter, format = 'text') => {
+const gendiff = (filepathBefore, filepathAfter, format = 'pretty') => {
   const contentBefore = fs.readFileSync(filepathBefore, 'utf-8');
   const contentAfter = fs.readFileSync(filepathAfter, 'utf-8');
 
@@ -14,11 +14,11 @@ const gendiff = (filepathBefore, filepathAfter, format = 'text') => {
   const dataBefore = parse(contentBefore, typeBefore);
   const dataAfter = parse(contentAfter, typeAfter);
 
-  const AST = buildAST(dataBefore, dataAfter);
+  const ast = buildAST(dataBefore, dataAfter);
 
   const render = getFormatter(format);
 
-  return render(AST);
+  return render(ast);
 };
 
 export default gendiff;
