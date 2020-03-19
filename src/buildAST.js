@@ -2,40 +2,29 @@ import _ from 'lodash';
 
 const compareValues = (first, second, key) => {
   if (_.isObject(first[key]) && _.isObject(second[key])) {
-    return 'nested';
+    return (obj1, obj2, key1, fn) => ({ name: key1, status: 'nested', children: fn(obj1[key1], obj2[key1]) });
   }
   if (first[key] === second[key]) {
-    return 'unchanged';
+    return (obj1, obj2, key1) => ({ name: key1, value: obj1[key1], status: 'unchanged' });
   }
   if (!_.has(first, key)) {
-    return 'added';
+    return (obj1, obj2, key1) => ({ name: key1, value: obj2[key1], status: 'added' });
   }
   if (!_.has(second, key)) {
-    return 'deleted';
+    return (obj1, obj2, key1) => ({ name: key1, value: obj1[key1], status: 'deleted' });
   }
   if (first[key] !== second[key]) {
-    return 'modified';
+    return (obj1, obj2, key1) => ({
+      name: key1, value: obj1[key1], modifiedValue: obj2[key1], status: 'modified',
+    });
   }
   return 'uknown status';
 };
 
-const nodes = {
-  nested: (obj1, obj2, key, fn) => ({ name: key, status: 'nested', children: fn(obj1[key], obj2[key]) }),
-  modified: (obj1, obj2, key) => ({
-    name: key, value: obj1[key], modifiedValue: obj2[key], status: 'modified',
-  }),
-  unchanged: (obj1, obj2, key) => ({ name: key, value: obj1[key], status: 'unchanged' }),
-  deleted: (obj1, obj2, key) => ({ name: key, value: obj1[key], status: 'deleted' }),
-  added: (obj1, obj2, key) => ({ name: key, value: obj2[key], status: 'added' }),
-};
-
-const getNode = (status) => nodes[status];
-
 const buildAST = (obj1, obj2) => {
   const keys = _.union(Object.keys(obj1), Object.keys(obj2)).sort();
   return keys.map((key) => {
-    const status = compareValues(obj1, obj2, key);
-    const node = getNode(status);
+    const node = compareValues(obj1, obj2, key);
     return node(obj1, obj2, key, buildAST);
   });
 };
