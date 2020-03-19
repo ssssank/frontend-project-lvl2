@@ -24,7 +24,7 @@ const render = (AST) => {
   const iter = (tree, level) => {
     const res = tree.map((key) => {
       const value = `${stringify(key.value, level)}`;
-      const modifiedValue = `${stringify(key.valueNew, level)}`;
+      const modifiedValue = `${stringify(key.modifiedValue, level)}`;
       switch (key.status) {
         case 'nested':
           return `${getIndent(level)}${key.name}: ${iter(key.children, level + 1)}`;
@@ -34,7 +34,7 @@ const render = (AST) => {
           return `${getIndent(level, '-')}${key.name}: ${value}`;
         case 'added':
           return `${getIndent(level, '+')}${key.name}: ${value}`;
-        case 'not modified':
+        case 'unchanged':
           return `${getIndent(level)}${key.name}: ${value}`;
         default:
           throw new Error(`Unknown status of key '${key.status}'!`);
