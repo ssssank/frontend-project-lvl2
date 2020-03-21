@@ -22,27 +22,33 @@ const stringify = (value, level) => {
 
 const render = (AST) => {
   const iter = (tree, level) => {
-    const res = tree.map((key) => {
-      const value = `${stringify(key.value, level)}`;
+    const result = tree.map((key) => {
       switch (key.status) {
         case 'nested':
           return `${getIndent(level)}${key.name}: ${iter(key.children, level + 1)}`;
         case 'modified': {
-          const modifiedValue = `${stringify(key.modifiedValue, level)}`;
-          return `${getIndent(level, '-')}${key.name}: ${value}\n${getIndent(level, '+')}${key.name}: ${modifiedValue}`;
+          const oldValue = stringify(key.oldValue, level);
+          const newValue = `${stringify(key.newValue, level)}`;
+          return `${getIndent(level, '-')}${key.name}: ${oldValue}\n${getIndent(level, '+')}${key.name}: ${newValue}`;
         }
-        case 'deleted':
+        case 'deleted': {
+          const value = stringify(key.value, level);
           return `${getIndent(level, '-')}${key.name}: ${value}`;
-        case 'added':
+        }
+        case 'added': {
+          const value = stringify(key.value, level);
           return `${getIndent(level, '+')}${key.name}: ${value}`;
-        case 'unchanged':
+        }
+        case 'unchanged': {
+          const value = stringify(key.value, level);
           return `${getIndent(level)}${key.name}: ${value}`;
+        }
         default:
           throw new Error(`Unknown status of key '${key.status}'!`);
       }
     });
 
-    return res.length > 0 ? `{\n${res.join('\n')}\n${getIndent(level - 1)}}` : '{}';
+    return result.length > 0 ? `{\n${result.join('\n')}\n${getIndent(level - 1)}}` : '{}';
   };
 
   return iter(AST, 1);

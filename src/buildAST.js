@@ -34,14 +34,12 @@ const buildAST = (first, second) => {
     if (first[key] !== second[key]) {
       return {
         name: key,
-        value: first[key],
-        modifiedValue: second[key],
+        oldValue: first[key],
+        newValue: second[key],
         status: 'modified',
       };
     }
-    return {
-      status: 'unknown',
-    };
+    return 'unknown';
   });
 };
 
