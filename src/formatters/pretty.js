@@ -24,12 +24,13 @@ const render = (AST) => {
   const iter = (tree, level) => {
     const res = tree.map((key) => {
       const value = `${stringify(key.value, level)}`;
-      const modifiedValue = `${stringify(key.modifiedValue, level)}`;
       switch (key.status) {
         case 'nested':
           return `${getIndent(level)}${key.name}: ${iter(key.children, level + 1)}`;
-        case 'modified':
+        case 'modified': {
+          const modifiedValue = `${stringify(key.modifiedValue, level)}`;
           return `${getIndent(level, '-')}${key.name}: ${value}\n${getIndent(level, '+')}${key.name}: ${modifiedValue}`;
+        }
         case 'deleted':
           return `${getIndent(level, '-')}${key.name}: ${value}`;
         case 'added':

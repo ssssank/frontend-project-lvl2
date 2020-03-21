@@ -9,12 +9,13 @@ const render = (AST) => {
       .map((key) => {
         const newPath = [...path, key.name];
         const value = getValue(key.value);
-        const modifiedValue = getValue(key.modifiedValue);
         switch (key.status) {
           case 'nested':
             return iter(key.children, newPath);
-          case 'modified':
+          case 'modified': {
+            const modifiedValue = getValue(key.modifiedValue);
             return `Property '${newPath.join('.')}' was changed from ${value} to ${modifiedValue}`;
+          }
           case 'deleted':
             return `Property '${newPath.join('.')}' was deleted`;
           case 'added':
