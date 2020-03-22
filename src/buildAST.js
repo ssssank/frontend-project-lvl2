@@ -10,13 +10,6 @@ const buildAST = (first, second) => {
         children: buildAST(first[key], second[key]),
       };
     }
-    if (first[key] === second[key]) {
-      return {
-        name: key,
-        value: first[key],
-        status: 'unchanged',
-      };
-    }
     if (!_.has(first, key)) {
       return {
         name: key,
@@ -39,7 +32,11 @@ const buildAST = (first, second) => {
         status: 'modified',
       };
     }
-    return 'unknown';
+    return {
+      name: key,
+      value: first[key],
+      status: 'unchanged',
+    };
   });
 };
 
